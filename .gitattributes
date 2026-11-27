@@ -1,0 +1,4 @@
+# Files left out of the GitHub release zip that sites install.
+# legacy/ is the standalone (non-WordPress) copy of the widget.
+legacy/     export-ignore
+.gitattributes export-ignore

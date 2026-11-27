@@ -3,7 +3,6 @@ Tags: accessibility, wcag, a11y, accessibility widget, dyslexia
 Requires at least: 6.3
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +37,12 @@ An overlay widget helps people personalise their experience, but it does not mak
 = Privacy =
 
 No cookies, no analytics, no third-party requests. Preferences are stored in the visitor's browser (localStorage, or sessionStorage if "remember" is off).
+
+The only outside connection is server-side: about every 12 hours your site asks GitHub (api.github.com) whether a new version of the plugin has been released. Visitors' browsers never contact GitHub.
+
+= Updates =
+
+Updates come from this plugin's GitHub releases (https://github.com/ImThomasThorne/free-accessibility) and appear in Dashboard → Updates like any other plugin.
 
 = Developer filters =
 
