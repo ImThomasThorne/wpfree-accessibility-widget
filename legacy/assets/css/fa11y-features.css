@@ -1,0 +1,254 @@
+/* ==========================================================================
+   Free Accessibility — page adjustments
+   Classes are set on <html> by fa11y-early.js. Every rule excludes the widget,
+   its overlays (.fa11y-ui) and the WordPress admin bar (#wpadminbar), so
+   neither the menu nor the toolbar is ever altered.
+   ========================================================================== */
+
+@font-face {
+	font-family: "FA11Y OpenDyslexic";
+	src: url("../fonts/OpenDyslexic-Regular.woff") format("woff");
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
+	font-family: "FA11Y OpenDyslexic";
+	src: url("../fonts/OpenDyslexic-Bold.woff") format("woff");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* ---------- Page zoom (content scaling) ---------- */
+html.fa11y-page-zoom-1 body > :not(.fa11y-ui, #wpadminbar) { zoom: 1.1; }
+html.fa11y-page-zoom-2 body > :not(.fa11y-ui, #wpadminbar) { zoom: 1.25; }
+html.fa11y-page-zoom-3 body > :not(.fa11y-ui, #wpadminbar) { zoom: 1.5; }
+
+/* ---------- Line height (level 2 meets WCAG 1.4.12 text spacing) ---------- */
+html.fa11y-line-height-1 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { line-height: 1.5 !important; }
+html.fa11y-line-height-2 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { line-height: 1.75 !important; }
+html.fa11y-line-height-3 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { line-height: 2 !important; }
+html[class*="fa11y-line-height-"] body :is(p, li, dd, blockquote):not(.fa11y-ui *, #wpadminbar *) { margin-bottom: 1.5em !important; }
+
+/* ---------- Letter & word spacing ---------- */
+html.fa11y-letter-spacing-1 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { letter-spacing: 0.06em !important; word-spacing: 0.08em !important; }
+html.fa11y-letter-spacing-2 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { letter-spacing: 0.12em !important; word-spacing: 0.16em !important; }
+html.fa11y-letter-spacing-3 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { letter-spacing: 0.2em !important; word-spacing: 0.28em !important; }
+
+/* ---------- Text alignment ---------- */
+html.fa11y-text-align-1 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { text-align: left !important; }
+html.fa11y-text-align-2 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { text-align: center !important; }
+html.fa11y-text-align-3 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { text-align: right !important; }
+
+/* ---------- Fonts (icon fonts and code are left alone) ---------- */
+html.fa11y-readable-font body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *):not(i, code, pre, kbd, samp, .dashicons, .dashicons-before, .material-icons, .material-symbols-outlined, .material-symbols-rounded, [class*="icon"], [class*="Icon"], [class*="fa-"], [class^="fa "], [class*="eicon"], [class*="genericon"], [class*="glyph"]) {
+	font-family: Verdana, Tahoma, "Segoe UI", Arial, Helvetica, sans-serif !important;
+}
+html.fa11y-dyslexia-font body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *):not(i, code, pre, kbd, samp, .dashicons, .dashicons-before, .material-icons, .material-symbols-outlined, .material-symbols-rounded, [class*="icon"], [class*="Icon"], [class*="fa-"], [class^="fa "], [class*="eicon"], [class*="genericon"], [class*="glyph"]) {
+	font-family: "FA11Y OpenDyslexic", "Comic Sans MS", Verdana, sans-serif !important;
+}
+html.fa11y-bold-text body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { font-weight: 700 !important; }
+
+/* ---------- Highlight links ---------- */
+html.fa11y-highlight-links:root body a[href]:not(.fa11y-ui *, #wpadminbar *) {
+	text-decoration: underline !important;
+	text-decoration-thickness: 2px !important;
+	text-underline-offset: 3px !important;
+	background-color: #ffeb3b !important;
+	color: #000 !important;
+	outline: 2px solid #000 !important;
+	outline-offset: 1px !important;
+}
+html.fa11y-highlight-links:root body a[href]:not(.fa11y-ui *, #wpadminbar *) * { color: #000 !important; }
+
+/* ---------- Highlight headings ---------- */
+html.fa11y-highlight-titles body :is(h1, h2, h3, h4, h5, h6, [role="heading"]):not(.fa11y-ui *, #wpadminbar *) {
+	outline: 3px solid #0b57d0 !important;
+	outline-offset: 4px !important;
+	box-shadow: 0 0 0 7px #fff !important;
+}
+
+/* ---------- Highlight on hover (deepest hovered element only) ---------- */
+html.fa11y-highlight-hover body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *):hover:not(:has(:hover)) {
+	outline: 3px dashed #0b57d0 !important;
+	outline-offset: 2px !important;
+}
+
+/* ---------- Highlight focus ---------- */
+html.fa11y-highlight-focus body :focus:not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) {
+	outline: 4px solid #0b57d0 !important;
+	outline-offset: 3px !important;
+	box-shadow: 0 0 0 8px #fff, 0 0 0 11px #000 !important;
+}
+
+/* ---------- Contrast: dark ---------- */
+html.fa11y-contrast-1 body,
+html.fa11y-contrast-1 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) {
+	background-color: #000 !important;
+	color: #fff !important;
+	border-color: #fff !important;
+	text-shadow: none !important;
+	box-shadow: none !important;
+}
+html.fa11y-contrast-1 body a[href]:not(.fa11y-ui *, #wpadminbar *),
+html.fa11y-contrast-1 body a[href]:not(.fa11y-ui *, #wpadminbar *) * { color: #ffeb3b !important; }
+html.fa11y-contrast-1 body :is(h1, h2, h3, h4, h5, h6):not(.fa11y-ui *, #wpadminbar *) { color: #8be9fd !important; }
+html.fa11y-contrast-1 body :is(button, input, select, textarea):not(.fa11y-ui *, #wpadminbar *) { border: 2px solid #fff !important; }
+
+/* ---------- Contrast: light ---------- */
+html.fa11y-contrast-2 body,
+html.fa11y-contrast-2 body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) {
+	background-color: #fff !important;
+	color: #000 !important;
+	border-color: #000 !important;
+	text-shadow: none !important;
+	box-shadow: none !important;
+}
+html.fa11y-contrast-2 body a[href]:not(.fa11y-ui *, #wpadminbar *),
+html.fa11y-contrast-2 body a[href]:not(.fa11y-ui *, #wpadminbar *) * { color: #0000c8 !important; }
+html.fa11y-contrast-2 body :is(button, input, select, textarea):not(.fa11y-ui *, #wpadminbar *) { border: 2px solid #000 !important; }
+
+/* ---------- Contrast: inverted (filter layer below) — re-invert media so photos look normal ---------- */
+html.fa11y-contrast-4 body :is(img, video, iframe, canvas, embed, object):not(.fa11y-ui *, #wpadminbar *) {
+	filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* ---------- Custom colours (after contrast so they win) ---------- */
+html.fa11y-text-color body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *) { color: var(--fa11y-text-color) !important; }
+html.fa11y-title-color body :is(h1, h2, h3, h4, h5, h6, [role="heading"]):not(.fa11y-ui *, #wpadminbar *),
+html.fa11y-title-color body :is(h1, h2, h3, h4, h5, h6, [role="heading"]) *:not(.fa11y-ui *, #wpadminbar *) { color: var(--fa11y-title-color) !important; }
+html.fa11y-bg-color body,
+html.fa11y-bg-color body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *, img, video, iframe, svg, svg *) { background-color: var(--fa11y-bg-color) !important; }
+
+/* ---------- Hide images ---------- */
+html.fa11y-hide-images body :is(img, picture, video, canvas, [role="img"]:not(svg *), figure > svg):not(.fa11y-ui *, #wpadminbar *) { visibility: hidden !important; }
+html.fa11y-hide-images body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *),
+html.fa11y-hide-images body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *)::before,
+html.fa11y-hide-images body :not(.fa11y-ui, .fa11y-ui *, #wpadminbar, #wpadminbar *)::after { background-image: none !important; }
+
+/* ---------- Stop animations ---------- */
+html.fa11y-stop-animations *:not(.fa11y-ui *, #wpadminbar *),
+html.fa11y-stop-animations *:not(.fa11y-ui *, #wpadminbar *)::before,
+html.fa11y-stop-animations *:not(.fa11y-ui *, #wpadminbar *)::after {
+	animation-duration: 0.01ms !important;
+	animation-iteration-count: 1 !important;
+	animation-delay: 0s !important;
+	transition-duration: 0.01ms !important;
+	transition-delay: 0s !important;
+	scroll-behavior: auto !important;
+}
+
+/* ---------- Big cursor ---------- */
+html.fa11y-cursor-1, html.fa11y-cursor-1 body :not(#wpadminbar, #wpadminbar *, .fa11y-ui) {
+	cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M6 3l30 22-14 2.5 9 18.5-7 3-9-18.5L6 40z' fill='%23000' stroke='%23fff' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E") 6 3, auto !important;
+}
+html.fa11y-cursor-2, html.fa11y-cursor-2 body :not(#wpadminbar, #wpadminbar *, .fa11y-ui) {
+	cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M6 3l30 22-14 2.5 9 18.5-7 3-9-18.5L6 40z' fill='%23fff' stroke='%23000' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E") 6 3, auto !important;
+}
+html.fa11y-cursor-1 body :is(a, button, [role="button"], label, select, summary, input[type="submit"], input[type="checkbox"], input[type="radio"]):not(#wpadminbar *),
+html.fa11y-cursor-1 body :is(a, button, [role="button"], label, summary) *:not(#wpadminbar *) {
+	cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M17 4a4 4 0 0 1 4 4v12l12 2.5a4 4 0 0 1 3 4.6L34 40a6 6 0 0 1-6 5H20a6 6 0 0 1-4.8-2.4L7 31a3.6 3.6 0 0 1 5.4-4.6L13 27V8a4 4 0 0 1 4-4z' fill='%23000' stroke='%23fff' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E") 17 4, pointer !important;
+}
+html.fa11y-cursor-2 body :is(a, button, [role="button"], label, select, summary, input[type="submit"], input[type="checkbox"], input[type="radio"]):not(#wpadminbar *),
+html.fa11y-cursor-2 body :is(a, button, [role="button"], label, summary) *:not(#wpadminbar *) {
+	cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cpath d='M17 4a4 4 0 0 1 4 4v12l12 2.5a4 4 0 0 1 3 4.6L34 40a6 6 0 0 1-6 5H20a6 6 0 0 1-4.8-2.4L7 31a3.6 3.6 0 0 1 5.4-4.6L13 27V8a4 4 0 0 1 4-4z' fill='%23fff' stroke='%23000' stroke-width='2.5' stroke-linejoin='round'/%3E%3C/svg%3E") 17 4, pointer !important;
+}
+
+/* The admin bar and widget inherit from <body>; give them back a normal cursor. */
+html[class*="fa11y-cursor-"] #wpadminbar { cursor: auto !important; }
+
+/* ==========================================================================
+   Colour filter layer (contrast, inverted / dark mode, saturation).
+   A transparent full-screen layer filters whatever is painted behind it, so
+   the WordPress admin bar (z-index 99999) and the accessibility widget sit
+   above it untouched, and fixed headers keep working.
+   ========================================================================== */
+html.fa11y-filtered::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 99998;
+	pointer-events: none;
+	-webkit-backdrop-filter: var(--fa11y-filter);
+	backdrop-filter: var(--fa11y-filter);
+}
+
+/* Dark mode (profile): neutral colours are swapped by JavaScript. Until that has
+   run, cover the page in black so returning visitors don't see a white flash. */
+html.fa11y-dark-mode:not([data-fa11y-dark-ready])::after {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: 2147483647;
+	background: #000;
+	pointer-events: none;
+}
+
+/* ==========================================================================
+   Overlays created by the widget in the light DOM (all carry .fa11y-ui)
+   ========================================================================== */
+.fa11y-reading-guide {
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	height: 10px;
+	margin-top: -5px;
+	background: #ffd400;
+	border-top: 2px solid #000;
+	border-bottom: 2px solid #000;
+	pointer-events: none;
+	z-index: 2147482000;
+	box-sizing: border-box;
+}
+.fa11y-mask {
+	position: fixed;
+	left: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.65);
+	pointer-events: none;
+	z-index: 2147482000;
+}
+.fa11y-mask-top { top: 0; }
+.fa11y-mask-bottom { bottom: 0; }
+
+.fa11y-magnifier {
+	position: fixed;
+	z-index: 2147482500;
+	max-width: min(640px, calc(100vw - 32px));
+	padding: 12px 16px;
+	background: #111;
+	color: #fff;
+	border: 2px solid #fff;
+	border-radius: 8px;
+	box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+	font: 600 28px/1.35 Verdana, Tahoma, "Segoe UI", Arial, sans-serif;
+	letter-spacing: normal;
+	word-spacing: normal;
+	text-align: left;
+	pointer-events: none;
+	overflow-wrap: anywhere;
+	box-sizing: border-box;
+}
+.fa11y-magnifier[hidden] { display: none; }
+
+html .fa11y-speaking {
+	outline: 3px solid #ffd400 !important;
+	outline-offset: 2px !important;
+	background-color: rgba(255, 212, 0, 0.25) !important;
+}
+html .fa11y-target-flash {
+	outline: 4px solid #0b57d0 !important;
+	outline-offset: 4px !important;
+}
+html.fa11y-read-aloud body :is(p, li, h1, h2, h3, h4, h5, h6, td, th, blockquote, figcaption, dt, dd, label, caption):not(.fa11y-ui *, #wpadminbar *):hover {
+	outline: 2px dotted currentColor;
+	outline-offset: 2px;
+	cursor: help;
+}
+
+@media (forced-colors: active) {
+	.fa11y-reading-guide { background: Highlight; border-color: CanvasText; forced-color-adjust: none; }
+	.fa11y-magnifier { border-color: CanvasText; }
+}

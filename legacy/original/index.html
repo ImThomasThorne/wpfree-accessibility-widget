@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility Widget — standalone copy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap">
+    <link rel="stylesheet" href="accessibility.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: var(--font-body);
+            background: var(--color-bg-main);
+            color: var(--color-text-main);
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <!-- Inline a11y bootstrap: reads saved preferences from localStorage and applies
+         body classes before first paint, same as src/layouts/BaseLayout.astro -->
+    <script>
+    (function(){try{var p=JSON.parse(localStorage.getItem('a11y-preferences'));if(!p)return;var b=document.body;if(p.textLevel>0)b.classList.add('a11y-text-'+p.textLevel);var m={'high-contrast':'a11y-high-contrast','reduced-motion':'a11y-reduced-motion','dyslexia-font':'a11y-dyslexia-font','line-height':'a11y-line-height','letter-spacing':'a11y-letter-spacing','highlight-links':'a11y-highlight-links','large-cursor':'a11y-large-cursor','focus-enhanced':'a11y-focus-enhanced'};for(var k in m)if(p[k])b.classList.add(m[k]);}catch(e){}})();
+    </script>
+
+    <h1>Accessibility Widget</h1>
+    <p>This is a standalone copy of the accessibility pop-up used on the main portfolio site, kept here for reuse/experimentation. Click the icon in the bottom-right corner to open it.</p>
+    <p>Try a <a href="#demo">link</a> to see the "Highlight Links" setting.</p>
+
+    <script src="accessibility.js"></script>
+</body>
+</html>

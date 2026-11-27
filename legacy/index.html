@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Accessibility Widget — standalone demo</title>
+
+	<!--
+		1) CONFIG (optional). Everything here is optional — remove any line to use
+		   its default. This is the standalone equivalent of the plugin's settings page.
+		   Must come BEFORE fa11y-early.js.
+	-->
+	<script>
+	window.fa11yConfig = {
+		// Placement: bottom-right | bottom-left | middle-right | middle-left | top-right | top-left
+		position: 'bottom-right',
+		offsetX: 20,               // px from the side edge
+		offsetY: 20,               // px from the top/bottom edge (ignored for middle-*)
+
+		// Button
+		icon: 'access',            // access | person | eye | settings
+		iconSize: 56,              // 44 (small), 56 (medium), 68 (large)
+		shape: 'circle',           // circle | rounded | square
+		colors: {
+			buttonBg: '#0B3A66',   // button background
+			buttonFg: '#FFFFFF',   // icon colour — keep at least 3:1 contrast with buttonBg
+			accent:   '#0B3A66'    // menu header + active settings (text on it is auto black/white)
+		},
+
+		// Menu
+		panelTheme: 'light',       // light | dark | auto (follows visitor's system)
+		title: 'Accessibility Menu',
+		statementUrl: '',          // e.g. '/accessibility' — adds a link at the bottom of the menu
+		statementText: 'Accessibility statement',
+
+		// Dark Mode profile: your site's own light and dark colours. They swap with each other
+		// exactly; greys in between map proportionally; brand colours are left alone.
+		// Omit (or leave '') for pure white / pure black.
+		darkMode: { light: '', dark: '' },   // e.g. { light: '#F3F6F4', dark: '#081A2B' }
+
+		// Behaviour
+		shortcut: true,            // Alt + A opens/closes the menu
+		remember: true,            // false = choices last only until the tab is closed
+		respectOsMotion: true,     // stop animations automatically if the device asks for reduced motion
+		hideMobile: false,         // hide below 768px
+		hideDesktop: false,        // hide at 768px and above
+
+		// Delete any you don't want to offer. Omit the whole line to offer everything.
+		features: [
+			'fontScale', 'pageZoom', 'lineHeight', 'letterSpacing', 'textAlign',
+			'readableFont', 'dyslexiaFont', 'boldText', 'highlightLinks', 'highlightTitles', 'magnifier',
+			'contrast', 'saturation', 'customColors',
+			'readAloud', 'pageStructure', 'readingGuide', 'readingMask', 'stopAnimations',
+			'muteSounds', 'hideImages', 'cursor', 'highlightHover', 'highlightFocus'
+		],
+		profiles: ['seizure', 'vision', 'adhd', 'cognitive', 'motor', 'dyslexia', 'dark']
+
+		// cssUrl: '/a11y/css/fa11y-widget.css'  // only needed if you move the CSS away from ../css/ relative to the JS
+	};
+	</script>
+
+	<!-- 2) EARLY BOOTSTRAP: applies saved choices before first paint (no flash). Not deferred, on purpose. -->
+	<script src="assets/js/fa11y-early.js"></script>
+
+	<!-- 3) PAGE ADJUSTMENT STYLES -->
+	<link rel="stylesheet" href="assets/css/fa11y-features.css">
+
+	<!-- 4) WIDGET -->
+	<script src="assets/js/fa11y-widget.js" defer></script>
+
+	<style>
+		body { margin: 0; font: 18px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: #1a1a1a; background: #fafafa; }
+		header, footer { background: #0B3A66; color: #fff; padding: 1rem 2rem; }
+		header a, footer a { color: #fff; }
+		nav ul { list-style: none; display: flex; gap: 1.5rem; margin: 0; padding: 0; }
+		main { max-width: 760px; margin: 0 auto; padding: 2rem; }
+		img { max-width: 100%; height: auto; border-radius: 8px; }
+		.card { background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 1rem 1.5rem; margin: 1.5rem 0; }
+		.spin { display: inline-block; width: 24px; height: 24px; border: 4px solid #3FA7B3; border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite; vertical-align: middle; }
+		@keyframes spin { to { transform: rotate(360deg); } }
+	</style>
+</head>
+<body>
+	<header>
+		<nav aria-label="Main">
+			<ul>
+				<li><a href="#about">About</a></li>
+				<li><a href="#work">Work</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+		<h1>Accessibility widget — standalone demo</h1>
+		<p>This page uses exactly the same files as the WordPress plugin, without WordPress. Open the menu with the button in the corner, or press <kbd>Alt</kbd> + <kbd>A</kbd>.</p>
+
+		<section id="about" aria-labelledby="about-h" class="card">
+			<h2 id="about-h">Things to try</h2>
+			<ul>
+				<li>Turn on <strong>Dark Mode</strong> or <strong>Monochrome</strong> — the button and menu keep their own colours.</li>
+				<li>Use <strong>Page Structure</strong> to jump between headings, landmarks and links.</li>
+				<li>Turn on <strong>Read Aloud</strong> and click this sentence to hear it.</li>
+				<li>Turn on <strong>Stop Animations</strong> to stop this spinner: <span class="spin" aria-hidden="true"></span></li>
+				<li>Try <a href="#work">Highlight Links</a> and the <strong>Text Magnifier</strong>.</li>
+			</ul>
+		</section>
+
+		<section id="work" aria-labelledby="work-h" class="card">
+			<h2 id="work-h">Sample content</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Donec ullamcorper nulla non metus auctor fringilla.</p>
+			<h3>A smaller heading</h3>
+			<p>Maecenas sed diam eget risus varius blandit sit amet non magna. Cras mattis consectetur purus sit amet fermentum.</p>
+			<img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='220'%3E%3Cdefs%3E%3ClinearGradient id='g'%3E%3Cstop offset='0' stop-color='%23EF476F'/%3E%3Cstop offset='.5' stop-color='%23F4A261'/%3E%3Cstop offset='1' stop-color='%233FA7B3'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='700' height='220' fill='url(%23g)'/%3E%3C/svg%3E" alt="A colourful gradient, used to test Hide Images and colour modes">
+		</section>
+	</main>
+
+	<footer id="contact">
+		<p>Footer — <a href="#top">Back to top</a></p>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,392 @@
+/* ============================================
+   Accessibility Widget — standalone copy
+   Extracted from public/css/styles.css (design tokens +
+   .a11y-trigger/.a11y-panel widget styles + body modifier classes)
+   ============================================ */
+
+:root {
+    --color-primary: #0B3A66;
+    --color-secondary: #3FA7B3;
+    --color-accent: #EF476F;
+    --color-accent-warm: #F4A261;
+    --color-bg-main: #081A2B;
+    --color-bg-alt: #0B3A66;
+    --color-text-main: #F3F6F4;
+    --color-text-muted: rgba(243,246,244,0.75);
+
+    --font-size-sm: clamp(0.875rem, 2vw, 1rem);
+    --font-size-base: clamp(1rem, 2.5vw, 1.125rem);
+
+    --font-body: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    --line-height-tight: 1.2;
+    --line-height-base: 1.6;
+    --line-height-relaxed: 1.8;
+
+    --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+    --border-radius-sm: 4px;
+    --border-radius-lg: 16px;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+}
+
+/* ============================================
+   Accessibility Widget
+   ============================================ */
+
+/* Trigger Button */
+.a11y-trigger {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 10000;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 2px solid var(--color-secondary);
+    background: var(--color-bg-main);
+    color: var(--color-text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-base), transform var(--transition-base), box-shadow var(--transition-base);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+.a11y-trigger:hover,
+.a11y-trigger:focus-visible {
+    background: var(--color-secondary);
+    border-color: var(--color-bg-main);
+    color: var(--color-bg-main);
+    transform: scale(1.08);
+    box-shadow: 0 6px 24px rgba(63,167,179,0.4);
+}
+
+.a11y-trigger svg {
+    width: 26px;
+    height: 26px;
+    fill: currentColor;
+}
+
+/* Panel */
+.a11y-panel {
+    position: fixed;
+    bottom: 88px;
+    right: 24px;
+    z-index: 10000;
+    width: 320px;
+    max-height: 70vh;
+    background: var(--color-bg-alt);
+    border: 1px solid rgba(63,167,179,0.3);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity var(--transition-base), transform var(--transition-base), visibility var(--transition-base);
+}
+
+.a11y-panel.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.a11y-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(243,246,244,0.1);
+}
+
+.a11y-panel-header h2 {
+    margin: 0;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.a11y-panel-close {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-sm);
+    transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.a11y-panel-close:hover,
+.a11y-panel-close:focus-visible {
+    background: rgba(243,246,244,0.1);
+    color: var(--color-text-main);
+}
+
+.a11y-panel-body {
+    padding: 12px 20px 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Setting Row */
+.a11y-setting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(243,246,244,0.06);
+}
+
+.a11y-setting:last-child {
+    border-bottom: none;
+}
+
+.a11y-setting-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-main);
+    flex: 1;
+    margin-right: 12px;
+}
+
+/* Toggle Switch */
+.a11y-switch {
+    position: relative;
+    width: 48px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.a11y-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+}
+
+.a11y-switch-track {
+    position: absolute;
+    inset: 0;
+    background: rgba(243,246,244,0.15);
+    border-radius: 14px;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.a11y-switch-track::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    background: var(--color-text-main);
+    border-radius: 50%;
+    transition: transform var(--transition-fast);
+}
+
+.a11y-switch input:checked + .a11y-switch-track {
+    background: var(--color-secondary);
+}
+
+.a11y-switch input:checked + .a11y-switch-track::after {
+    transform: translateX(20px);
+}
+
+.a11y-switch input:focus-visible + .a11y-switch-track {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 2px;
+}
+
+/* Font Size Stepper */
+.a11y-stepper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.a11y-stepper button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(243,246,244,0.2);
+    background: transparent;
+    color: var(--color-text-main);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 1.125rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.a11y-stepper button:hover,
+.a11y-stepper button:focus-visible {
+    background: rgba(243,246,244,0.1);
+    border-color: var(--color-secondary);
+}
+
+.a11y-stepper-value {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    min-width: 36px;
+    text-align: center;
+}
+
+/* Reset Button */
+.a11y-reset {
+    width: 100%;
+    margin-top: 12px;
+    padding: 10px;
+    border: 1px solid rgba(243,246,244,0.2);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    font-family: var(--font-body);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.a11y-reset:hover,
+.a11y-reset:focus-visible {
+    background: rgba(239,71,111,0.15);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 400px) {
+    .a11y-panel {
+        right: 8px;
+        left: 8px;
+        width: auto;
+        bottom: 84px;
+    }
+
+    .a11y-trigger {
+        right: 16px;
+        bottom: 16px;
+    }
+}
+
+/* ============================================
+   Accessibility Body Modifier Classes
+   ============================================ */
+
+/* Text Size Scaling */
+body.a11y-text-1 { font-size: 112.5%; }
+body.a11y-text-2 { font-size: 125%; }
+body.a11y-text-3 { font-size: 137.5%; }
+body.a11y-text-4 { font-size: 150%; }
+
+/* High Contrast */
+body.a11y-high-contrast {
+    --color-bg-main: #000000;
+    --color-bg-alt: #1a1a1a;
+    --color-text-main: #ffffff;
+    --color-text-muted: rgba(255,255,255,0.9);
+    --color-primary: #4a90d9;
+    --color-secondary: #5ce0d0;
+    --color-accent: #ff6b9d;
+}
+
+body.a11y-high-contrast .nav,
+body.a11y-high-contrast .footer {
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+/* Reduced Motion */
+body.a11y-reduced-motion *,
+body.a11y-reduced-motion *::before,
+body.a11y-reduced-motion *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+}
+
+/* Dyslexia-Friendly Font */
+body.a11y-dyslexia-font {
+    --font-body: "Comic Sans MS", "OpenDyslexic", Verdana, sans-serif;
+    --font-heading: "Comic Sans MS", "OpenDyslexic", Verdana, sans-serif;
+    word-spacing: 0.1em;
+}
+
+/* Increased Line Height */
+body.a11y-line-height {
+    --line-height-base: 2;
+    --line-height-relaxed: 2.4;
+    --line-height-tight: 1.6;
+}
+
+/* Increased Letter Spacing */
+body.a11y-letter-spacing {
+    letter-spacing: 0.08em;
+    word-spacing: 0.12em;
+}
+
+/* Highlight Links */
+body.a11y-highlight-links a {
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+    text-underline-offset: 3px !important;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    background: rgba(63,167,179,0.15);
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+body.a11y-highlight-links a:hover,
+body.a11y-highlight-links a:focus {
+    outline-color: var(--color-secondary);
+}
+
+/* Large Cursor */
+body.a11y-large-cursor,
+body.a11y-large-cursor * {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M5 2l24 18-12 2 8 16-6 2-8-16-6 12z' fill='%23000' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E") 5 2, auto !important;
+}
+
+body.a11y-large-cursor a,
+body.a11y-large-cursor button,
+body.a11y-large-cursor [role="button"],
+body.a11y-large-cursor input[type="submit"] {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M14 2c6 0 10 4 10 10s-4 10-10 10S4 18 4 12 8 2 14 2zm0 6v8m-4-4h8' fill='none' stroke='%23000' stroke-width='3'/%3E%3Cpath d='M14 2c6 0 10 4 10 10s-4 10-10 10S4 18 4 12 8 2 14 2zm0 6v8m-4-4h8' fill='none' stroke='%23fff' stroke-width='1'/%3E%3C/svg%3E") 14 14, pointer !important;
+}
+
+/* Enhanced Focus Indicators */
+body.a11y-focus-enhanced *:focus-visible {
+    outline: 3px solid var(--color-accent) !important;
+    outline-offset: 4px !important;
+    box-shadow: 0 0 0 6px rgba(239,71,111,0.3) !important;
+}
