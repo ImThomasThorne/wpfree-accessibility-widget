@@ -42,8 +42,7 @@ The only outside connection is server-side: about every 12 hours your site asks 
 
 = Updates =
 
-Updates come from this plugin's GitHub releases (https://github.com/ImThomasThorne/free-accessibility) and appear in Dashboard → Updates like any other plugin.
-
+Updates come from this plugin's GitHub releases (https://github.com/ImThomasThorne/wpfree-accessibility-widget) and appear in Dashboard → Updates like any other plugin.
 = Developer filters =
 
 * `fa11y_should_load` (bool): disable the widget on specific pages.

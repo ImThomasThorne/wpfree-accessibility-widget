@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class FA11Y_Admin {
 
-	const SLUG = 'free-accessibility';
+	const SLUG = 'wpfree-accessibility-widget';
 
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
@@ -23,8 +23,8 @@ class FA11Y_Admin {
 
 	public static function menu() {
 		add_options_page(
-			__( 'Accessibility Widget', 'free-accessibility' ),
-			__( 'Accessibility Widget', 'free-accessibility' ),
+			__( 'Accessibility Widget', 'wpfree-accessibility-widget' ),
+			__( 'Accessibility Widget', 'wpfree-accessibility-widget' ),
 			'manage_options',
 			self::SLUG,
 			array( __CLASS__, 'render' )
@@ -45,7 +45,7 @@ class FA11Y_Admin {
 
 	public static function action_links( $links ) {
 		$url = admin_url( 'options-general.php?page=' . self::SLUG );
-		array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'free-accessibility' ) . '</a>' );
+		array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'wpfree-accessibility-widget' ) . '</a>' );
 		return $links;
 	}
 
@@ -74,7 +74,7 @@ class FA11Y_Admin {
 
 	public static function handle_reset() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You do not have permission to do that.', 'free-accessibility' ), 403 );
+			wp_die( esc_html__( 'You do not have permission to do that.', 'wpfree-accessibility-widget' ), 403 );
 		}
 		check_admin_referer( 'fa11y_reset' );
 		delete_option( FA11Y_Settings::OPTION );
@@ -131,27 +131,27 @@ class FA11Y_Admin {
 		}
 		$columns = array(
 			'light' => array(
-				'legend'  => __( 'Light colour', 'free-accessibility' ),
-				'hint'    => __( 'Used for light areas, usually the background.', 'free-accessibility' ),
-				'default' => array( '#FFFFFF', __( 'Pure white (default)', 'free-accessibility' ) ),
+				'legend'  => __( 'Light colour', 'wpfree-accessibility-widget' ),
+				'hint'    => __( 'Used for light areas, usually the background.', 'wpfree-accessibility-widget' ),
+				'default' => array( '#FFFFFF', __( 'Pure white (default)', 'wpfree-accessibility-widget' ) ),
 			),
 			'dark'  => array(
-				'legend'  => __( 'Dark colour', 'free-accessibility' ),
-				'hint'    => __( 'Used for dark areas, usually text.', 'free-accessibility' ),
-				'default' => array( '#000000', __( 'Pure black (default)', 'free-accessibility' ) ),
+				'legend'  => __( 'Dark colour', 'wpfree-accessibility-widget' ),
+				'hint'    => __( 'Used for dark areas, usually text.', 'wpfree-accessibility-widget' ),
+				'default' => array( '#000000', __( 'Pure black (default)', 'wpfree-accessibility-widget' ) ),
 			),
 		);
 		$roles   = array(
-			'background' => __( 'Theme background', 'free-accessibility' ),
-			'text'       => __( 'Theme text', 'free-accessibility' ),
+			'background' => __( 'Theme background', 'wpfree-accessibility-widget' ),
+			'text'       => __( 'Theme text', 'wpfree-accessibility-widget' ),
 		);
 		?>
 		<dialog id="fa11y-pick" class="fa11y-pick" aria-labelledby="fa11y-pick-title" aria-describedby="fa11y-pick-intro">
 			<div class="fa11y-pick-head">
-				<h2 id="fa11y-pick-title"><?php esc_html_e( 'Choose your dark mode colours', 'free-accessibility' ); ?></h2>
-				<button type="button" class="fa11y-pick-x" data-pick-close aria-label="<?php esc_attr_e( 'Close', 'free-accessibility' ); ?>"><span aria-hidden="true">&times;</span></button>
+				<h2 id="fa11y-pick-title"><?php esc_html_e( 'Choose your dark mode colours', 'wpfree-accessibility-widget' ); ?></h2>
+				<button type="button" class="fa11y-pick-x" data-pick-close aria-label="<?php esc_attr_e( 'Close', 'wpfree-accessibility-widget' ); ?>"><span aria-hidden="true">&times;</span></button>
 			</div>
-			<p id="fa11y-pick-intro"><?php esc_html_e( 'Pick the colour your site uses for light areas and the one it uses for dark areas. Dark Mode swaps them with each other. Colours your theme uses for its background and text are labelled to help.', 'free-accessibility' ); ?></p>
+			<p id="fa11y-pick-intro"><?php esc_html_e( 'Pick the colour your site uses for light areas and the one it uses for dark areas. Dark Mode swaps them with each other. Colours your theme uses for its background and text are labelled to help.', 'wpfree-accessibility-widget' ); ?></p>
 
 			<div class="fa11y-pick-cols">
 				<?php foreach ( $columns as $key => $col ) : ?>
@@ -179,14 +179,14 @@ class FA11Y_Admin {
 			</div>
 
 			<div class="fa11y-dark-preview fa11y-pick-preview" aria-hidden="true">
-				<div class="fa11y-dark-sample" data-pick-sample="normal"><strong><?php esc_html_e( 'Normal', 'free-accessibility' ); ?></strong><span><?php esc_html_e( 'Text on your background', 'free-accessibility' ); ?></span></div>
-				<div class="fa11y-dark-sample" data-pick-sample="dark"><strong><?php esc_html_e( 'Dark mode', 'free-accessibility' ); ?></strong><span><?php esc_html_e( 'Text on your background', 'free-accessibility' ); ?></span></div>
+				<div class="fa11y-dark-sample" data-pick-sample="normal"><strong><?php esc_html_e( 'Normal', 'wpfree-accessibility-widget' ); ?></strong><span><?php esc_html_e( 'Text on your background', 'wpfree-accessibility-widget' ); ?></span></div>
+				<div class="fa11y-dark-sample" data-pick-sample="dark"><strong><?php esc_html_e( 'Dark mode', 'wpfree-accessibility-widget' ); ?></strong><span><?php esc_html_e( 'Text on your background', 'wpfree-accessibility-widget' ); ?></span></div>
 			</div>
 			<p class="fa11y-contrast" id="fa11y-pick-msg" aria-live="polite"></p>
 
 			<div class="fa11y-pick-actions">
-				<button type="button" class="button button-primary" id="fa11y-pick-apply"><?php esc_html_e( 'Use these colours', 'free-accessibility' ); ?></button>
-				<button type="button" class="button" data-pick-close><?php esc_html_e( 'Cancel', 'free-accessibility' ); ?></button>
+				<button type="button" class="button button-primary" id="fa11y-pick-apply"><?php esc_html_e( 'Use these colours', 'wpfree-accessibility-widget' ); ?></button>
+				<button type="button" class="button" data-pick-close><?php esc_html_e( 'Cancel', 'wpfree-accessibility-widget' ); ?></button>
 			</div>
 		</dialog>
 		<?php
@@ -204,14 +204,14 @@ class FA11Y_Admin {
 		$icons    = FA11Y_Settings::trigger_icons();
 		?>
 		<div class="wrap fa11y-admin">
-			<h1><?php esc_html_e( 'Accessibility Widget', 'free-accessibility' ); ?></h1>
+			<h1><?php esc_html_e( 'Accessibility Widget', 'wpfree-accessibility-widget' ); ?></h1>
 
 			<?php if ( isset( $_GET['fa11y-reset'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- display only. ?>
-				<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Settings restored to defaults.', 'free-accessibility' ); ?></p></div>
+				<div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Settings restored to defaults.', 'wpfree-accessibility-widget' ); ?></p></div>
 			<?php endif; ?>
 			<?php settings_errors(); ?>
 
-			<p class="fa11y-intro"><?php esc_html_e( 'Adds an accessibility menu to every page of your site so visitors can adjust text, colours, spacing and navigation to suit their needs. Visitors\' choices are remembered on their device.', 'free-accessibility' ); ?></p>
+			<p class="fa11y-intro"><?php esc_html_e( 'Adds an accessibility menu to every page of your site so visitors can adjust text, colours, spacing and navigation to suit their needs. Visitors\' choices are remembered on their device.', 'wpfree-accessibility-widget' ); ?></p>
 
 			<form method="post" action="options.php" novalidate>
 				<?php settings_fields( 'fa11y' ); ?>
@@ -221,30 +221,30 @@ class FA11Y_Admin {
 					<div class="fa11y-main">
 
 						<div class="fa11y-card">
-							<h2><?php esc_html_e( 'General', 'free-accessibility' ); ?></h2>
+							<h2><?php esc_html_e( 'General', 'wpfree-accessibility-widget' ); ?></h2>
 							<table class="form-table" role="presentation">
 								<tr>
-									<th scope="row"><?php esc_html_e( 'Status', 'free-accessibility' ); ?></th>
-									<td><?php self::checkbox( $s, 'enabled', __( 'Show the accessibility menu on the front end', 'free-accessibility' ) ); ?></td>
+									<th scope="row"><?php esc_html_e( 'Status', 'wpfree-accessibility-widget' ); ?></th>
+									<td><?php self::checkbox( $s, 'enabled', __( 'Show the accessibility menu on the front end', 'wpfree-accessibility-widget' ) ); ?></td>
 								</tr>
 								<tr>
-									<th scope="row"><?php esc_html_e( 'Devices', 'free-accessibility' ); ?></th>
+									<th scope="row"><?php esc_html_e( 'Devices', 'wpfree-accessibility-widget' ); ?></th>
 									<td>
 										<fieldset>
-											<legend class="screen-reader-text"><?php esc_html_e( 'Devices', 'free-accessibility' ); ?></legend>
-											<?php self::checkbox( $s, 'hide_mobile', __( 'Hide on mobile (screens narrower than 768px)', 'free-accessibility' ) ); ?><br>
-											<?php self::checkbox( $s, 'hide_desktop', __( 'Hide on desktop (768px and wider)', 'free-accessibility' ) ); ?>
+											<legend class="screen-reader-text"><?php esc_html_e( 'Devices', 'wpfree-accessibility-widget' ); ?></legend>
+											<?php self::checkbox( $s, 'hide_mobile', __( 'Hide on mobile (screens narrower than 768px)', 'wpfree-accessibility-widget' ) ); ?><br>
+											<?php self::checkbox( $s, 'hide_desktop', __( 'Hide on desktop (768px and wider)', 'wpfree-accessibility-widget' ) ); ?>
 										</fieldset>
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><?php esc_html_e( 'Behaviour', 'free-accessibility' ); ?></th>
+									<th scope="row"><?php esc_html_e( 'Behaviour', 'wpfree-accessibility-widget' ); ?></th>
 									<td>
 										<fieldset>
-											<legend class="screen-reader-text"><?php esc_html_e( 'Behaviour', 'free-accessibility' ); ?></legend>
-											<?php self::checkbox( $s, 'remember', __( 'Remember visitors\' choices between visits', 'free-accessibility' ), __( 'Stored only in the visitor\'s browser (localStorage). No cookies, no tracking. When off, choices last until the browser tab is closed.', 'free-accessibility' ) ); ?>
-											<?php self::checkbox( $s, 'shortcut', __( 'Enable the Alt + A keyboard shortcut', 'free-accessibility' ) ); ?><br>
-											<?php self::checkbox( $s, 'respect_os_motion', __( 'Stop animations automatically if the visitor\'s device asks for reduced motion', 'free-accessibility' ) ); ?>
+											<legend class="screen-reader-text"><?php esc_html_e( 'Behaviour', 'wpfree-accessibility-widget' ); ?></legend>
+											<?php self::checkbox( $s, 'remember', __( 'Remember visitors\' choices between visits', 'wpfree-accessibility-widget' ), __( 'Stored only in the visitor\'s browser (localStorage). No cookies, no tracking. When off, choices last until the browser tab is closed.', 'wpfree-accessibility-widget' ) ); ?>
+											<?php self::checkbox( $s, 'shortcut', __( 'Enable the Alt + A keyboard shortcut', 'wpfree-accessibility-widget' ) ); ?><br>
+											<?php self::checkbox( $s, 'respect_os_motion', __( 'Stop animations automatically if the visitor\'s device asks for reduced motion', 'wpfree-accessibility-widget' ) ); ?>
 										</fieldset>
 									</td>
 								</tr>
@@ -252,34 +252,34 @@ class FA11Y_Admin {
 						</div>
 
 						<div class="fa11y-card">
-							<h2><?php esc_html_e( 'Placement', 'free-accessibility' ); ?></h2>
+							<h2><?php esc_html_e( 'Placement', 'wpfree-accessibility-widget' ); ?></h2>
 							<table class="form-table" role="presentation">
 								<tr>
-									<th scope="row"><label for="fa11y-position"><?php esc_html_e( 'Position', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-position"><?php esc_html_e( 'Position', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td><?php self::select( $s, 'position', FA11Y_Settings::positions() ); ?></td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-offset_x"><?php esc_html_e( 'Horizontal offset', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-offset_x"><?php esc_html_e( 'Horizontal offset', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td><input type="number" id="fa11y-offset_x" class="small-text" min="0" max="300" step="1" name="<?php echo esc_attr( self::name( 'offset_x' ) ); ?>" value="<?php echo esc_attr( $s['offset_x'] ); ?>" aria-describedby="fa11y-offset-desc"> px</td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-offset_y"><?php esc_html_e( 'Vertical offset', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-offset_y"><?php esc_html_e( 'Vertical offset', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td>
 										<input type="number" id="fa11y-offset_y" class="small-text" min="0" max="300" step="1" name="<?php echo esc_attr( self::name( 'offset_y' ) ); ?>" value="<?php echo esc_attr( $s['offset_y'] ); ?>" aria-describedby="fa11y-offset-desc"> px
-										<p class="description" id="fa11y-offset-desc"><?php esc_html_e( 'Distance from the edge of the screen. Increase this if the button overlaps a chat widget, cookie banner or "back to top" button. Vertical offset is ignored for middle positions.', 'free-accessibility' ); ?></p>
+										<p class="description" id="fa11y-offset-desc"><?php esc_html_e( 'Distance from the edge of the screen. Increase this if the button overlaps a chat widget, cookie banner or "back to top" button. Vertical offset is ignored for middle positions.', 'wpfree-accessibility-widget' ); ?></p>
 									</td>
 								</tr>
 							</table>
 						</div>
 
 						<div class="fa11y-card">
-							<h2><?php esc_html_e( 'Appearance', 'free-accessibility' ); ?></h2>
+							<h2><?php esc_html_e( 'Appearance', 'wpfree-accessibility-widget' ); ?></h2>
 							<table class="form-table" role="presentation">
 								<tr>
-									<th scope="row"><?php esc_html_e( 'Icon', 'free-accessibility' ); ?></th>
+									<th scope="row"><?php esc_html_e( 'Icon', 'wpfree-accessibility-widget' ); ?></th>
 									<td>
 										<fieldset class="fa11y-icon-choices">
-											<legend class="screen-reader-text"><?php esc_html_e( 'Icon', 'free-accessibility' ); ?></legend>
+											<legend class="screen-reader-text"><?php esc_html_e( 'Icon', 'wpfree-accessibility-widget' ); ?></legend>
 											<?php foreach ( $icons as $key => $icon ) : ?>
 												<label class="fa11y-icon-choice">
 													<input type="radio" name="<?php echo esc_attr( self::name( 'icon' ) ); ?>" value="<?php echo esc_attr( $key ); ?>" <?php checked( $s['icon'], $key ); ?>>
@@ -291,113 +291,113 @@ class FA11Y_Admin {
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-icon_size"><?php esc_html_e( 'Button size', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-icon_size"><?php esc_html_e( 'Button size', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td>
 										<?php self::select( $s, 'icon_size', FA11Y_Settings::icon_sizes() ); ?>
-										<p class="description"><?php esc_html_e( 'All sizes meet the WCAG 2.2 minimum target size (24px) and the enhanced 44px target size.', 'free-accessibility' ); ?></p>
+										<p class="description"><?php esc_html_e( 'All sizes meet the WCAG 2.2 minimum target size (24px) and the enhanced 44px target size.', 'wpfree-accessibility-widget' ); ?></p>
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-shape"><?php esc_html_e( 'Button shape', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-shape"><?php esc_html_e( 'Button shape', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td><?php self::select( $s, 'shape', FA11Y_Settings::shapes() ); ?></td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-button_bg"><?php esc_html_e( 'Button background colour', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-button_bg"><?php esc_html_e( 'Button background colour', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td><?php self::colour( $s, 'button_bg' ); ?></td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-button_fg"><?php esc_html_e( 'Button icon colour', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-button_fg"><?php esc_html_e( 'Button icon colour', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td>
 										<?php self::colour( $s, 'button_fg' ); ?>
 										<p class="fa11y-contrast" id="fa11y-contrast-button" aria-live="polite"></p>
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-accent"><?php esc_html_e( 'Menu accent colour', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-accent"><?php esc_html_e( 'Menu accent colour', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td>
 										<?php self::colour( $s, 'accent' ); ?>
-										<p class="description"><?php esc_html_e( 'Used for the menu header and active settings. Text on top of it is automatically set to black or white, whichever has the higher contrast.', 'free-accessibility' ); ?></p>
+										<p class="description"><?php esc_html_e( 'Used for the menu header and active settings. Text on top of it is automatically set to black or white, whichever has the higher contrast.', 'wpfree-accessibility-widget' ); ?></p>
 										<p class="fa11y-contrast" id="fa11y-contrast-accent" aria-live="polite"></p>
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-panel_theme"><?php esc_html_e( 'Menu theme', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-panel_theme"><?php esc_html_e( 'Menu theme', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td><?php self::select( $s, 'panel_theme', FA11Y_Settings::panel_themes() ); ?></td>
 								</tr>
 							</table>
 						</div>
 
 						<div class="fa11y-card">
-							<h2><?php esc_html_e( 'Dark mode colours', 'free-accessibility' ); ?></h2>
-							<p class="fa11y-card-intro"><?php esc_html_e( 'The Dark Mode profile swaps your site\'s light and dark colours and leaves brand colours alone. If your theme uses an off-white or a dark grey rather than pure white and black, choose them here so they swap with each other exactly. Shades in between are mapped proportionally. Leave both blank to use pure white and black.', 'free-accessibility' ); ?></p>
+							<h2><?php esc_html_e( 'Dark mode colours', 'wpfree-accessibility-widget' ); ?></h2>
+							<p class="fa11y-card-intro"><?php esc_html_e( 'The Dark Mode profile swaps your site\'s light and dark colours and leaves brand colours alone. If your theme uses an off-white or a dark grey rather than pure white and black, choose them here so they swap with each other exactly. Shades in between are mapped proportionally. Leave both blank to use pure white and black.', 'wpfree-accessibility-widget' ); ?></p>
 							<?php $theme = FA11Y_Settings::theme_colours(); ?>
 							<?php if ( $theme['entries'] ) : ?>
 								<p>
 									<button type="button" class="button" id="fa11y-pick-open" aria-haspopup="dialog" aria-describedby="fa11y-pick-open-desc">
-										<?php esc_html_e( 'Choose from my theme\'s colours…', 'free-accessibility' ); ?>
+										<?php esc_html_e( 'Choose from my theme\'s colours…', 'wpfree-accessibility-widget' ); ?>
 									</button>
 								</p>
 								<p class="description" id="fa11y-pick-open-desc">
 									<?php
 									/* translators: %d: number of colours. */
-									printf( esc_html( _n( 'Pick from the %d colour in your theme\'s palette.', 'Pick from the %d colours in your theme\'s palette.', count( $theme['entries'] ), 'free-accessibility' ) ), count( $theme['entries'] ) );
+									printf( esc_html( _n( 'Pick from the %d colour in your theme\'s palette.', 'Pick from the %d colours in your theme\'s palette.', count( $theme['entries'] ), 'wpfree-accessibility-widget' ) ), count( $theme['entries'] ) );
 									?>
 								</p>
 							<?php endif; ?>
 							<table class="form-table" role="presentation">
 								<tr>
-									<th scope="row"><label for="fa11y-dark_light"><?php esc_html_e( 'Light colour', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-dark_light"><?php esc_html_e( 'Light colour', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td>
 										<?php self::colour( $s, 'dark_light' ); ?>
-										<p class="description"><?php esc_html_e( 'Your usual background colour, e.g. white or off-white. In dark mode it becomes the dark colour.', 'free-accessibility' ); ?></p>
+										<p class="description"><?php esc_html_e( 'Your usual background colour, e.g. white or off-white. In dark mode it becomes the dark colour.', 'wpfree-accessibility-widget' ); ?></p>
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-dark_dark"><?php esc_html_e( 'Dark colour', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-dark_dark"><?php esc_html_e( 'Dark colour', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td>
 										<?php self::colour( $s, 'dark_dark' ); ?>
-										<p class="description"><?php esc_html_e( 'Your usual text colour, e.g. black or dark grey. In dark mode it becomes the light colour.', 'free-accessibility' ); ?></p>
+										<p class="description"><?php esc_html_e( 'Your usual text colour, e.g. black or dark grey. In dark mode it becomes the light colour.', 'wpfree-accessibility-widget' ); ?></p>
 									</td>
 								</tr>
 							</table>
 							<div class="fa11y-dark-preview" aria-hidden="true">
-								<div class="fa11y-dark-sample" data-mode="normal"><strong><?php esc_html_e( 'Normal', 'free-accessibility' ); ?></strong><span><?php esc_html_e( 'Text on your background', 'free-accessibility' ); ?></span></div>
-								<div class="fa11y-dark-sample" data-mode="dark"><strong><?php esc_html_e( 'Dark mode', 'free-accessibility' ); ?></strong><span><?php esc_html_e( 'Text on your background', 'free-accessibility' ); ?></span></div>
+								<div class="fa11y-dark-sample" data-mode="normal"><strong><?php esc_html_e( 'Normal', 'wpfree-accessibility-widget' ); ?></strong><span><?php esc_html_e( 'Text on your background', 'wpfree-accessibility-widget' ); ?></span></div>
+								<div class="fa11y-dark-sample" data-mode="dark"><strong><?php esc_html_e( 'Dark mode', 'wpfree-accessibility-widget' ); ?></strong><span><?php esc_html_e( 'Text on your background', 'wpfree-accessibility-widget' ); ?></span></div>
 							</div>
 							<p class="fa11y-contrast" id="fa11y-contrast-dark" aria-live="polite"></p>
 						</div>
 
 						<div class="fa11y-card">
-							<h2><?php esc_html_e( 'Menu text & links', 'free-accessibility' ); ?></h2>
+							<h2><?php esc_html_e( 'Menu text & links', 'wpfree-accessibility-widget' ); ?></h2>
 							<table class="form-table" role="presentation">
 								<tr>
-									<th scope="row"><label for="fa11y-title"><?php esc_html_e( 'Menu title', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-title"><?php esc_html_e( 'Menu title', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td>
 										<input type="text" class="regular-text" id="fa11y-title" name="<?php echo esc_attr( self::name( 'title' ) ); ?>" value="<?php echo esc_attr( $s['title'] ); ?>" aria-describedby="fa11y-title-desc">
-										<p class="description" id="fa11y-title-desc"><?php esc_html_e( 'Also used as the button\'s accessible name for screen reader users.', 'free-accessibility' ); ?></p>
+										<p class="description" id="fa11y-title-desc"><?php esc_html_e( 'Also used as the button\'s accessible name for screen reader users.', 'wpfree-accessibility-widget' ); ?></p>
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-statement_url"><?php esc_html_e( 'Accessibility statement URL', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-statement_url"><?php esc_html_e( 'Accessibility statement URL', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td>
 										<input type="url" class="regular-text" id="fa11y-statement_url" name="<?php echo esc_attr( self::name( 'statement_url' ) ); ?>" value="<?php echo esc_attr( $s['statement_url'] ); ?>" placeholder="https://" aria-describedby="fa11y-statement-desc">
-										<p class="description" id="fa11y-statement-desc"><?php esc_html_e( 'Optional. Adds a link to your accessibility statement at the bottom of the menu. Leave blank to hide it.', 'free-accessibility' ); ?></p>
+										<p class="description" id="fa11y-statement-desc"><?php esc_html_e( 'Optional. Adds a link to your accessibility statement at the bottom of the menu. Leave blank to hide it.', 'wpfree-accessibility-widget' ); ?></p>
 									</td>
 								</tr>
 								<tr>
-									<th scope="row"><label for="fa11y-statement_text"><?php esc_html_e( 'Statement link text', 'free-accessibility' ); ?></label></th>
+									<th scope="row"><label for="fa11y-statement_text"><?php esc_html_e( 'Statement link text', 'wpfree-accessibility-widget' ); ?></label></th>
 									<td><input type="text" class="regular-text" id="fa11y-statement_text" name="<?php echo esc_attr( self::name( 'statement_text' ) ); ?>" value="<?php echo esc_attr( $s['statement_text'] ); ?>"></td>
 								</tr>
 							</table>
 						</div>
 
 						<div class="fa11y-card">
-							<h2><?php esc_html_e( 'Features', 'free-accessibility' ); ?></h2>
-							<p><?php esc_html_e( 'Choose which options visitors can use. Unticked features are hidden from the menu.', 'free-accessibility' ); ?></p>
-							<p><button type="button" class="button" data-fa11y-check="all"><?php esc_html_e( 'Select all', 'free-accessibility' ); ?></button> <button type="button" class="button" data-fa11y-check="none"><?php esc_html_e( 'Select none', 'free-accessibility' ); ?></button></p>
+							<h2><?php esc_html_e( 'Features', 'wpfree-accessibility-widget' ); ?></h2>
+							<p><?php esc_html_e( 'Choose which options visitors can use. Unticked features are hidden from the menu.', 'wpfree-accessibility-widget' ); ?></p>
+							<p><button type="button" class="button" data-fa11y-check="all"><?php esc_html_e( 'Select all', 'wpfree-accessibility-widget' ); ?></button> <button type="button" class="button" data-fa11y-check="none"><?php esc_html_e( 'Select none', 'wpfree-accessibility-widget' ); ?></button></p>
 
 							<fieldset class="fa11y-feature-group">
-								<legend><?php esc_html_e( 'Accessibility profiles (one-click presets)', 'free-accessibility' ); ?></legend>
+								<legend><?php esc_html_e( 'Accessibility profiles (one-click presets)', 'wpfree-accessibility-widget' ); ?></legend>
 								<div class="fa11y-checks">
 									<?php foreach ( FA11Y_Settings::profiles() as $id => $label ) : ?>
 										<label><input type="checkbox" name="<?php echo esc_attr( self::name( 'profiles' ) ); ?>[]" value="<?php echo esc_attr( $id ); ?>" <?php checked( in_array( $id, $profiles, true ) ); ?>> <?php echo esc_html( $label ); ?></label>
@@ -415,7 +415,7 @@ class FA11Y_Admin {
 									</div>
 								</fieldset>
 							<?php endforeach; ?>
-							<p class="description"><?php esc_html_e( 'Read aloud uses the visitor\'s browser speech engine and is hidden automatically in browsers that do not support it.', 'free-accessibility' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Read aloud uses the visitor\'s browser speech engine and is hidden automatically in browsers that do not support it.', 'wpfree-accessibility-widget' ); ?></p>
 						</div>
 
 						<?php submit_button(); ?>
@@ -423,15 +423,15 @@ class FA11Y_Admin {
 
 					<aside class="fa11y-side" aria-labelledby="fa11y-preview-title">
 						<div class="fa11y-card fa11y-sticky">
-							<h2 id="fa11y-preview-title"><?php esc_html_e( 'Preview', 'free-accessibility' ); ?></h2>
+							<h2 id="fa11y-preview-title"><?php esc_html_e( 'Preview', 'wpfree-accessibility-widget' ); ?></h2>
 							<div class="fa11y-preview" aria-hidden="true">
 								<div class="fa11y-preview-screen" data-position="<?php echo esc_attr( $s['position'] ); ?>">
 									<span class="fa11y-preview-btn" data-shape="<?php echo esc_attr( $s['shape'] ); ?>" data-size="<?php echo esc_attr( $s['icon_size'] ); ?>"><?php echo $icons[ $s['icon'] ]['svg']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?></span>
 								</div>
 							</div>
-							<p class="description"><?php esc_html_e( 'Updates as you change placement and appearance settings. Save to apply them to your site.', 'free-accessibility' ); ?></p>
-							<h3><?php esc_html_e( 'Your own site\'s accessibility', 'free-accessibility' ); ?></h3>
-							<p class="description"><?php esc_html_e( 'This menu helps visitors personalise their experience, but it doesn\'t make a site WCAG compliant by itself. Keep using good headings, alt text, colour contrast and keyboard-friendly design in your theme and content.', 'free-accessibility' ); ?></p>
+							<p class="description"><?php esc_html_e( 'Updates as you change placement and appearance settings. Save to apply them to your site.', 'wpfree-accessibility-widget' ); ?></p>
+							<h3><?php esc_html_e( 'Your own site\'s accessibility', 'wpfree-accessibility-widget' ); ?></h3>
+							<p class="description"><?php esc_html_e( 'This menu helps visitors personalise their experience, but it doesn\'t make a site WCAG compliant by itself. Keep using good headings, alt text, colour contrast and keyboard-friendly design in your theme and content.', 'wpfree-accessibility-widget' ); ?></p>
 						</div>
 					</aside>
 				</div>
@@ -442,7 +442,7 @@ class FA11Y_Admin {
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="fa11y-reset-form">
 				<input type="hidden" name="action" value="fa11y_reset">
 				<?php wp_nonce_field( 'fa11y_reset' ); ?>
-				<button type="submit" class="button button-link-delete" onclick="return confirm('<?php echo esc_js( __( 'Restore all accessibility widget settings to their defaults?', 'free-accessibility' ) ); ?>');"><?php esc_html_e( 'Restore default settings', 'free-accessibility' ); ?></button>
+				<button type="submit" class="button button-link-delete" onclick="return confirm('<?php echo esc_js( __( 'Restore all accessibility widget settings to their defaults?', 'wpfree-accessibility-widget' ) ); ?>');"><?php esc_html_e( 'Restore default settings', 'wpfree-accessibility-widget' ); ?></button>
 			</form>
 		</div>
 		<?php

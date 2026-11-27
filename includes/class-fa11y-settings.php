@@ -22,42 +22,42 @@ class FA11Y_Settings {
 	public static function feature_groups() {
 		return array(
 			'content'    => array(
-				'label' => __( 'Content adjustments', 'free-accessibility' ),
+				'label' => __( 'Content adjustments', 'wpfree-accessibility-widget' ),
 				'items' => array(
-					'fontScale'       => __( 'Text size', 'free-accessibility' ),
-					'pageZoom'        => __( 'Page zoom', 'free-accessibility' ),
-					'lineHeight'      => __( 'Line height', 'free-accessibility' ),
-					'letterSpacing'   => __( 'Letter & word spacing', 'free-accessibility' ),
-					'textAlign'       => __( 'Text alignment', 'free-accessibility' ),
-					'readableFont'    => __( 'Readable font', 'free-accessibility' ),
-					'dyslexiaFont'    => __( 'Dyslexia-friendly font', 'free-accessibility' ),
-					'boldText'        => __( 'Bold text', 'free-accessibility' ),
-					'highlightLinks'  => __( 'Highlight links', 'free-accessibility' ),
-					'highlightTitles' => __( 'Highlight headings', 'free-accessibility' ),
-					'magnifier'       => __( 'Text magnifier', 'free-accessibility' ),
+					'fontScale'       => __( 'Text size', 'wpfree-accessibility-widget' ),
+					'pageZoom'        => __( 'Page zoom', 'wpfree-accessibility-widget' ),
+					'lineHeight'      => __( 'Line height', 'wpfree-accessibility-widget' ),
+					'letterSpacing'   => __( 'Letter & word spacing', 'wpfree-accessibility-widget' ),
+					'textAlign'       => __( 'Text alignment', 'wpfree-accessibility-widget' ),
+					'readableFont'    => __( 'Readable font', 'wpfree-accessibility-widget' ),
+					'dyslexiaFont'    => __( 'Dyslexia-friendly font', 'wpfree-accessibility-widget' ),
+					'boldText'        => __( 'Bold text', 'wpfree-accessibility-widget' ),
+					'highlightLinks'  => __( 'Highlight links', 'wpfree-accessibility-widget' ),
+					'highlightTitles' => __( 'Highlight headings', 'wpfree-accessibility-widget' ),
+					'magnifier'       => __( 'Text magnifier', 'wpfree-accessibility-widget' ),
 				),
 			),
 			'colour'     => array(
-				'label' => __( 'Colour adjustments', 'free-accessibility' ),
+				'label' => __( 'Colour adjustments', 'wpfree-accessibility-widget' ),
 				'items' => array(
-					'contrast'     => __( 'Contrast modes (dark, light, high, inverted)', 'free-accessibility' ),
-					'saturation'   => __( 'Saturation (low, high, monochrome)', 'free-accessibility' ),
-					'customColors' => __( 'Custom text, heading & background colours', 'free-accessibility' ),
+					'contrast'     => __( 'Contrast modes (dark, light, high, inverted)', 'wpfree-accessibility-widget' ),
+					'saturation'   => __( 'Saturation (low, high, monochrome)', 'wpfree-accessibility-widget' ),
+					'customColors' => __( 'Custom text, heading & background colours', 'wpfree-accessibility-widget' ),
 				),
 			),
 			'navigation' => array(
-				'label' => __( 'Orientation & navigation', 'free-accessibility' ),
+				'label' => __( 'Orientation & navigation', 'wpfree-accessibility-widget' ),
 				'items' => array(
-					'readAloud'       => __( 'Read aloud (text to speech)', 'free-accessibility' ),
-					'pageStructure'   => __( 'Page structure (headings, landmarks, links)', 'free-accessibility' ),
-					'readingGuide'    => __( 'Reading guide', 'free-accessibility' ),
-					'readingMask'     => __( 'Reading mask', 'free-accessibility' ),
-					'stopAnimations'  => __( 'Stop animations', 'free-accessibility' ),
-					'muteSounds'      => __( 'Mute sounds', 'free-accessibility' ),
-					'hideImages'      => __( 'Hide images', 'free-accessibility' ),
-					'cursor'          => __( 'Big cursor', 'free-accessibility' ),
-					'highlightHover'  => __( 'Highlight on hover', 'free-accessibility' ),
-					'highlightFocus'  => __( 'Highlight focus', 'free-accessibility' ),
+					'readAloud'       => __( 'Read aloud (text to speech)', 'wpfree-accessibility-widget' ),
+					'pageStructure'   => __( 'Page structure (headings, landmarks, links)', 'wpfree-accessibility-widget' ),
+					'readingGuide'    => __( 'Reading guide', 'wpfree-accessibility-widget' ),
+					'readingMask'     => __( 'Reading mask', 'wpfree-accessibility-widget' ),
+					'stopAnimations'  => __( 'Stop animations', 'wpfree-accessibility-widget' ),
+					'muteSounds'      => __( 'Mute sounds', 'wpfree-accessibility-widget' ),
+					'hideImages'      => __( 'Hide images', 'wpfree-accessibility-widget' ),
+					'cursor'          => __( 'Big cursor', 'wpfree-accessibility-widget' ),
+					'highlightHover'  => __( 'Highlight on hover', 'wpfree-accessibility-widget' ),
+					'highlightFocus'  => __( 'Highlight focus', 'wpfree-accessibility-widget' ),
 				),
 			),
 		);
@@ -83,48 +83,48 @@ class FA11Y_Settings {
 	 */
 	public static function profiles() {
 		return array(
-			'seizure'   => __( 'Seizure safe', 'free-accessibility' ),
-			'vision'    => __( 'Vision impaired', 'free-accessibility' ),
-			'adhd'      => __( 'ADHD friendly', 'free-accessibility' ),
-			'cognitive' => __( 'Cognitive & learning', 'free-accessibility' ),
-			'motor'     => __( 'Motor impaired', 'free-accessibility' ),
-			'dyslexia'  => __( 'Dyslexia friendly', 'free-accessibility' ),
-			'dark'      => __( 'Dark mode', 'free-accessibility' ),
+			'seizure'   => __( 'Seizure safe', 'wpfree-accessibility-widget' ),
+			'vision'    => __( 'Vision impaired', 'wpfree-accessibility-widget' ),
+			'adhd'      => __( 'ADHD friendly', 'wpfree-accessibility-widget' ),
+			'cognitive' => __( 'Cognitive & learning', 'wpfree-accessibility-widget' ),
+			'motor'     => __( 'Motor impaired', 'wpfree-accessibility-widget' ),
+			'dyslexia'  => __( 'Dyslexia friendly', 'wpfree-accessibility-widget' ),
+			'dark'      => __( 'Dark mode', 'wpfree-accessibility-widget' ),
 		);
 	}
 
 	public static function positions() {
 		return array(
-			'bottom-right' => __( 'Bottom right', 'free-accessibility' ),
-			'bottom-left'  => __( 'Bottom left', 'free-accessibility' ),
-			'middle-right' => __( 'Middle right', 'free-accessibility' ),
-			'middle-left'  => __( 'Middle left', 'free-accessibility' ),
-			'top-right'    => __( 'Top right', 'free-accessibility' ),
-			'top-left'     => __( 'Top left', 'free-accessibility' ),
+			'bottom-right' => __( 'Bottom right', 'wpfree-accessibility-widget' ),
+			'bottom-left'  => __( 'Bottom left', 'wpfree-accessibility-widget' ),
+			'middle-right' => __( 'Middle right', 'wpfree-accessibility-widget' ),
+			'middle-left'  => __( 'Middle left', 'wpfree-accessibility-widget' ),
+			'top-right'    => __( 'Top right', 'wpfree-accessibility-widget' ),
+			'top-left'     => __( 'Top left', 'wpfree-accessibility-widget' ),
 		);
 	}
 
 	public static function icon_sizes() {
 		return array(
-			'small'  => __( 'Small (44px)', 'free-accessibility' ),
-			'medium' => __( 'Medium (56px)', 'free-accessibility' ),
-			'large'  => __( 'Large (68px)', 'free-accessibility' ),
+			'small'  => __( 'Small (44px)', 'wpfree-accessibility-widget' ),
+			'medium' => __( 'Medium (56px)', 'wpfree-accessibility-widget' ),
+			'large'  => __( 'Large (68px)', 'wpfree-accessibility-widget' ),
 		);
 	}
 
 	public static function shapes() {
 		return array(
-			'circle'  => __( 'Circle', 'free-accessibility' ),
-			'rounded' => __( 'Rounded square', 'free-accessibility' ),
-			'square'  => __( 'Square', 'free-accessibility' ),
+			'circle'  => __( 'Circle', 'wpfree-accessibility-widget' ),
+			'rounded' => __( 'Rounded square', 'wpfree-accessibility-widget' ),
+			'square'  => __( 'Square', 'wpfree-accessibility-widget' ),
 		);
 	}
 
 	public static function panel_themes() {
 		return array(
-			'light' => __( 'Light', 'free-accessibility' ),
-			'dark'  => __( 'Dark', 'free-accessibility' ),
-			'auto'  => __( 'Follow visitor\'s system setting', 'free-accessibility' ),
+			'light' => __( 'Light', 'wpfree-accessibility-widget' ),
+			'dark'  => __( 'Dark', 'wpfree-accessibility-widget' ),
+			'auto'  => __( 'Follow visitor\'s system setting', 'wpfree-accessibility-widget' ),
 		);
 	}
 
@@ -136,19 +136,19 @@ class FA11Y_Settings {
 	public static function trigger_icons() {
 		return array(
 			'access'   => array(
-				'label' => __( 'Universal access', 'free-accessibility' ),
+				'label' => __( 'Universal access', 'wpfree-accessibility-widget' ),
 				'svg'   => '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22Zm0 2a9 9 0 1 1 0 18 9 9 0 0 1 0-18Zm0 1.75a1.75 1.75 0 1 0 0 3.5 1.75 1.75 0 0 0 0-3.5ZM6.6 8.6a.9.9 0 0 0-.2 1.78c1.3.3 2.6.52 3.85.62v2.2l-1.6 5.05a.9.9 0 0 0 1.71.55L11.8 14h.4l1.44 4.8a.9.9 0 0 0 1.71-.55L13.75 13.2V11c1.25-.1 2.55-.32 3.85-.62a.9.9 0 0 0-.4-1.76c-1.7.4-3.45.62-5.2.62s-3.5-.22-5.2-.62a.9.9 0 0 0-.2-.02Z"/></svg>',
 			),
 			'person'   => array(
-				'label' => __( 'Person', 'free-accessibility' ),
+				'label' => __( 'Person', 'wpfree-accessibility-widget' ),
 				'svg'   => '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle fill="currentColor" cx="12" cy="4.5" r="2.5"/><path fill="currentColor" d="M12 8c-4 0-7 1-7 1v2.5l4 .5v9h2v-5h2v5h2v-9l4-.5V9s-3-1-7-1z"/></svg>',
 			),
 			'eye'      => array(
-				'label' => __( 'Eye', 'free-accessibility' ),
+				'label' => __( 'Eye', 'wpfree-accessibility-widget' ),
 				'svg'   => '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 5C6.5 5 2.3 8.6 1 12c1.3 3.4 5.5 7 11 7s9.7-3.6 11-7c-1.3-3.4-5.5-7-11-7Zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10Zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>',
 			),
 			'settings' => array(
-				'label' => __( 'Adjustment sliders', 'free-accessibility' ),
+				'label' => __( 'Adjustment sliders', 'wpfree-accessibility-widget' ),
 				'svg'   => '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M3 6h9.2a3 3 0 0 1 5.6 0H21v2h-3.2a3 3 0 0 1-5.6 0H3V6Zm12 2a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM3 16h3.2a3 3 0 0 1 5.6 0H21v2h-9.2a3 3 0 0 1-5.6 0H3v-2Zm6 2a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"/></svg>',
 			),
 		);
@@ -169,9 +169,9 @@ class FA11Y_Settings {
 			'panel_theme'       => 'light',
 			'dark_light'        => '', // Dark mode: the site's light colour (blank = pure white).
 			'dark_dark'         => '', // Dark mode: the site's dark colour (blank = pure black).
-			'title'             => __( 'Accessibility Menu', 'free-accessibility' ),
+			'title'             => __( 'Accessibility Menu', 'wpfree-accessibility-widget' ),
 			'statement_url'     => '',
-			'statement_text'    => __( 'Accessibility statement', 'free-accessibility' ),
+			'statement_text'    => __( 'Accessibility statement', 'wpfree-accessibility-widget' ),
 			'shortcut'          => 1,
 			'remember'          => 1,
 			'hide_mobile'       => 0,
