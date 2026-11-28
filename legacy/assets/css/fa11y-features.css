@@ -174,8 +174,24 @@ html.fa11y-filtered::before {
 	backdrop-filter: var(--fa11y-filter);
 }
 
-/* Dark mode (profile): neutral colours are swapped by JavaScript. Until that has
-   run, cover the page in black so returning visitors don't see a white flash. */
+/* Dark mode (profile): JavaScript works out the swapped colour for each element and
+   stores it in an inline --fa11y-dm-* variable, listing which ones in data-fa11y-dm.
+   Applied here with !important so it beats theme rules that use !important too
+   (e.g. WordPress's .has-base-background-color). Highlight Links and read-aloud use
+   more specific selectors, so they still win over these. */
+html.fa11y-dark-mode [data-fa11y-dm~="bg"] { background-color: var(--fa11y-dm-bg) !important; }
+html.fa11y-dark-mode [data-fa11y-dm~="color"] { color: var(--fa11y-dm-color) !important; }
+html.fa11y-dark-mode [data-fa11y-dm~="fill"] { fill: var(--fa11y-dm-fill) !important; }
+html.fa11y-dark-mode [data-fa11y-dm~="stroke"] { stroke: var(--fa11y-dm-stroke) !important; }
+html.fa11y-dark-mode [data-fa11y-dm~="shadow"] { box-shadow: var(--fa11y-dm-shadow) !important; }
+html.fa11y-dark-mode [data-fa11y-dm~="bt"] { border-top-color: var(--fa11y-dm-bt) !important; }
+html.fa11y-dark-mode [data-fa11y-dm~="br"] { border-right-color: var(--fa11y-dm-br) !important; }
+html.fa11y-dark-mode [data-fa11y-dm~="bb"] { border-bottom-color: var(--fa11y-dm-bb) !important; }
+html.fa11y-dark-mode [data-fa11y-dm~="bl"] { border-left-color: var(--fa11y-dm-bl) !important; }
+/* Placeholder text follows the field's swapped text colour. */
+html.fa11y-dark-mode [data-fa11y-dm~="color"]::placeholder { color: var(--fa11y-dm-color) !important; opacity: 0.7 !important; }
+
+/* Until the swap has run, cover the page in black so returning visitors don't see a white flash. */
 html.fa11y-dark-mode:not([data-fa11y-dark-ready])::after {
 	content: "";
 	position: fixed;
@@ -233,7 +249,8 @@ html.fa11y-dark-mode:not([data-fa11y-dark-ready])::after {
 }
 .fa11y-magnifier[hidden] { display: none; }
 
-html .fa11y-speaking {
+/* Class doubled so it outranks dark mode's [data-fa11y-dm] rules. */
+html body .fa11y-speaking.fa11y-speaking {
 	outline: 3px solid #ffd400 !important;
 	outline-offset: 2px !important;
 	background-color: rgba(255, 212, 0, 0.25) !important;

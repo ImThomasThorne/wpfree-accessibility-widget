@@ -1038,23 +1038,53 @@
 	 * close to the site's configured light/dark colours).
 	 * Brand colours (anything with noticeable hue) and images are untouched.
 	 *  - Neutral backgrounds are swapped (light colour -> dark colour, greys in proportion).
-	 *  - Neutral text and SVG fills are swapped only if that gives better contrast
-	 *    against the (new) background behind them, so white text on a brand-coloured
-	 *    button stays white and black text on a yellow banner stays black.
-	 * Values are written as normal-priority inline styles, so other features that use
-	 * !important (e.g. Highlight Links) still win.
+	 *    Translucent overlays that dim a photo (e.g. a Cover block's overlay) are kept.
+	 *  - Text, borders, shadows and SVG fills are only touched where the background
+	 *    behind them changed. On an untouched brand-coloured background (a green footer,
+	 *    a pink button) they keep the site's own colours. Where the background did change,
+	 *    a neutral colour is swapped if that reads better against the new background.
+	 * Values are written as inline CSS variables (--fa11y-dm-*) plus a data-fa11y-dm
+	 * attribute; fa11y-features.css applies them with !important, so they beat theme
+	 * rules such as WordPress's `.has-base-background-color { ... !important }`.
+	 * Features that must win over dark mode (e.g. Highlight Links) use more specific selectors.
 	 * ------------------------------------------------------------------ */
 	var NEUTRAL_CHROMA = 30; // max(r,g,b) - min(r,g,b) at or below this counts as neutral (0-255)
 	var CANVAS_WHITE = { r: 255, g: 255, b: 255, a: 1 };
 	var BLACK = { r: 0, g: 0, b: 0, a: 1 };
 	var DM_BORDERS = ['border-top', 'border-right', 'border-bottom', 'border-left'];
+	// CSS property -> short name used for the --fa11y-dm-* variable and the data-fa11y-dm token.
+	var DM_PROPS = {
+		'background-color': 'bg', 'color': 'color', 'fill': 'fill', 'stroke': 'stroke', 'box-shadow': 'shadow',
+		'border-top-color': 'bt', 'border-right-color': 'br', 'border-bottom-color': 'bb', 'border-left-color': 'bl'
+	};
 
+	var colourCache = {};
+	var colourCtx = null;
 	function parseRGB(s) {
-		var m = /^rgba?\(([^)]+)\)$/.exec(String(s || '').trim());
-		if (!m) return null; // keywords, color(), oklch() etc. are left alone
-		var p = m[1].split(/[\s,\/]+/).filter(Boolean).map(parseFloat);
-		if (p.length < 3 || p.some(isNaN)) return null;
-		return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+		s = String(s || '').trim();
+		var m = /^rgba?\(([^)]+)\)$/.exec(s);
+		if (m) {
+			var p = m[1].split(/[\s,\/]+/).filter(Boolean).map(parseFloat);
+			if (p.length >= 3 && !p.some(isNaN)) return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
+		}
+		// Other formats browsers may report (oklch(), color(srgb ...), color-mix() results):
+		// let a 1px canvas convert them to sRGB.
+		if (!s || s === 'none' || s === 'currentcolor') return null;
+		if (s in colourCache) return colourCache[s];
+		var out = null;
+		try {
+			if (!colourCtx) colourCtx = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
+			colourCtx.clearRect(0, 0, 1, 1);
+			colourCtx.fillStyle = 'rgba(1, 2, 3, 0.004)';
+			colourCtx.fillStyle = s; // ignored if the browser can't parse it
+			if (colourCtx.fillStyle !== 'rgba(1, 2, 3, 0.004)') {
+				colourCtx.fillRect(0, 0, 1, 1);
+				var d = colourCtx.getImageData(0, 0, 1, 1).data;
+				out = { r: d[0], g: d[1], b: d[2], a: Math.round(d[3] / 255 * 100) / 100 };
+			}
+		} catch (e) { /* no canvas: leave the colour alone */ }
+		colourCache[s] = out;
+		return out;
 	}
 	function isNeutral(c) { return Math.max(c.r, c.g, c.b) - Math.min(c.r, c.g, c.b) <= NEUTRAL_CHROMA; }
 	function invertRGB(c) { return { r: 255 - c.r, g: 255 - c.g, b: 255 - c.b, a: c.a }; }
@@ -1114,22 +1144,45 @@
 		return ratioRGB(over(sw, bg), bg) > ratioRGB(over(fg, bg), bg) + 0.01 ? sw : null;
 	}
 
+	/** Does this element show a photo/video behind its content (e.g. a WordPress Cover block)? */
+	function hasMediaBackground(n) {
+		for (var c = n.firstElementChild; c; c = c.nextElementSibling) {
+			if ((c.tagName === 'IMG' || c.tagName === 'VIDEO' || c.tagName === 'PICTURE') && getComputedStyle(c).position === 'absolute') return true;
+		}
+		return false;
+	}
+	function sameRGB(a, b) { return !!a && !!b && dist(a, b) < 1.5; }
+
+	/** Swap the neutral colours in a computed box-shadow (solid ones only; soft drop shadows are kept). */
+	function swapShadow(value) {
+		var changed = false;
+		var out = value.replace(/rgba?\([^)]*\)/g, function (s) {
+			var c = parseRGB(s);
+			if (!c || c.a < 0.5 || !swappable(c)) return s;
+			changed = true;
+			return rgbCss(swapRGB(c));
+		});
+		return changed ? out : null;
+	}
+
 	Widget.prototype.startDarkMode = function () {
 		var html = document.documentElement;
-		var info = new WeakMap(); // element -> { bg: opaque background behind its content after the swap (null = unknown/image) }
-		var saved = new Map();    // element -> { prop: [originalInlineValue, originalPriority] }
+		// element -> { bg: opaque background behind its content after the swap, orig: the same before it (null = unknown/image) }
+		var info = new WeakMap();
+		var touched = new Set(); // elements given --fa11y-dm-* variables
 
 		var write = function (node, prop, value) {
-			var s = saved.get(node);
-			if (!s) { s = {}; saved.set(node, s); }
-			if (!(prop in s)) s[prop] = [node.style.getPropertyValue(prop), node.style.getPropertyPriority(prop)];
-			node.style.setProperty(prop, value);
+			var key = DM_PROPS[prop];
+			node.style.setProperty('--fa11y-dm-' + key, value);
+			var tokens = (node.getAttribute('data-fa11y-dm') || '').split(' ').filter(Boolean);
+			if (tokens.indexOf(key) === -1) node.setAttribute('data-fa11y-dm', tokens.concat(key).join(' '));
+			touched.add(node);
 		};
-		var parentBg = function (node) {
+		var parentInfo = function (node) {
 			for (var p = node.parentElement; p; p = p.parentElement) {
-				if (info.has(p)) return info.get(p).bg;
+				if (info.has(p)) return info.get(p);
 			}
-			return CANVAS_WHITE;
+			return { bg: CANVAS_WHITE, orig: CANVAS_WHITE };
 		};
 
 		var run = function () {
@@ -1145,11 +1198,13 @@
 				var job = {
 					el: n,
 					bg: cs.backgroundColor,
-					bgImage: cs.backgroundImage !== 'none',
+					bgImage: cs.backgroundImage !== 'none' || hasMediaBackground(n),
+					overlay: (cs.position === 'absolute' || cs.position === 'fixed') && parseFloat(cs.opacity) < 1,
 					color: cs.color,
 					svg: n.namespaceURI === 'http://www.w3.org/2000/svg',
 					fill: cs.fill,
 					stroke: cs.stroke,
+					shadow: cs.boxShadow,
 					borders: []
 				};
 				for (var b = 0; b < DM_BORDERS.length; b++) {
@@ -1164,24 +1219,32 @@
 			// Pass 2: decide and write, parents before children (document order).
 			jobs.forEach(function (j) {
 				var node = j.el;
-				var eff = node === html ? CANVAS_WHITE : parentBg(node);
+				var up = node === html ? { bg: CANVAS_WHITE, orig: CANVAS_WHITE } : parentInfo(node);
+				var eff = up.bg, orig = up.orig;
 				var bg = parseRGB(j.bg);
 
 				if (bg && bg.a > 0) {
-					if (swappable(bg)) {
+					var origBg = bg;
+					// A translucent layer dimming a photo keeps its colour, or the photo would wash out.
+					if (swappable(bg) && !j.overlay) {
 						bg = swapRGB(bg);
 						write(node, 'background-color', rgbCss(bg));
 					}
-					if (eff) eff = over(bg, eff);
-					else if (bg.a >= 0.95) eff = over(bg, BLACK);
+					eff = eff ? over(bg, eff) : (bg.a >= 0.95 ? over(bg, BLACK) : null);
+					orig = orig ? over(origBg, orig) : (origBg.a >= 0.95 ? over(origBg, BLACK) : null);
 				} else if (node === html) {
 					// Transparent root = white browser canvas; give it the dark colour.
 					eff = swapRGB(CANVAS_WHITE);
 					write(node, 'background-color', rgbCss(eff));
 				}
-				// Content over a background image: we can't know what's behind it, so leave its text alone.
-				if (j.bgImage) eff = null;
-				if (node === html) write(node, 'color-scheme', 'dark');
+				// Content over a background image or photo: we can't know what's behind it, so leave its text alone.
+				if (j.bgImage) eff = orig = null;
+				if (node === html) node.style.setProperty('color-scheme', 'dark');
+				info.set(node, { bg: eff, orig: orig });
+
+				// Only recolour content whose background actually changed. On an untouched
+				// brand-coloured background the site's own text colours are kept.
+				if (!eff || sameRGB(eff, orig)) return;
 
 				var fg = parseRGB(j.color);
 				var newFg = fg && bestNeutral(fg, eff);
@@ -1194,6 +1257,12 @@
 					if (c && swappable(c)) write(node, pair[0], rgbCss(swapRGB(c)));
 				});
 
+				// Solid box-shadows are often used as borders (e.g. on form fields).
+				if (j.shadow && j.shadow !== 'none') {
+					var sh = swapShadow(j.shadow);
+					if (sh) write(node, 'box-shadow', sh);
+				}
+
 				if (j.svg) {
 					['fill', 'stroke'].forEach(function (prop) {
 						if (j[prop] === j.color) return; // currentColor
@@ -1202,8 +1271,6 @@
 						if (nc) write(node, prop, rgbCss(nc));
 					});
 				}
-
-				info.set(node, { bg: eff });
 			});
 			html.setAttribute('data-fa11y-dark-ready', '');
 		};
@@ -1213,14 +1280,14 @@
 		var self = this;
 		return function () {
 			delete self.mutationHooks.darkMode;
-			saved.forEach(function (props, node) {
-				Object.keys(props).forEach(function (prop) {
-					node.style.removeProperty(prop);
-					if (props[prop][0]) node.style.setProperty(prop, props[prop][0], props[prop][1]);
-				});
+			touched.forEach(function (node) {
+				Object.keys(DM_PROPS).forEach(function (prop) { node.style.removeProperty('--fa11y-dm-' + DM_PROPS[prop]); });
+				node.removeAttribute('data-fa11y-dm');
 				if (node.getAttribute('style') === '') node.removeAttribute('style');
 			});
-			saved.clear();
+			touched.clear();
+			html.style.removeProperty('color-scheme');
+			if (html.getAttribute('style') === '') html.removeAttribute('style');
 			html.removeAttribute('data-fa11y-dark-ready');
 		};
 	};
