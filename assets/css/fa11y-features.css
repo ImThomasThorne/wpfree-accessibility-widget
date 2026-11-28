@@ -188,6 +188,8 @@ html.fa11y-dark-mode [data-fa11y-dm~="bt"] { border-top-color: var(--fa11y-dm-bt
 html.fa11y-dark-mode [data-fa11y-dm~="br"] { border-right-color: var(--fa11y-dm-br) !important; }
 html.fa11y-dark-mode [data-fa11y-dm~="bb"] { border-bottom-color: var(--fa11y-dm-bb) !important; }
 html.fa11y-dark-mode [data-fa11y-dm~="bl"] { border-left-color: var(--fa11y-dm-bl) !important; }
+/* Form fields with a background-image arrow/icon are inverted as a whole (see startDarkMode). */
+html.fa11y-dark-mode [data-fa11y-dm~="invert"] { filter: var(--fa11y-dm-invert) !important; }
 /* Placeholder text follows the field's swapped text colour. */
 html.fa11y-dark-mode [data-fa11y-dm~="color"]::placeholder { color: var(--fa11y-dm-color) !important; opacity: 0.7 !important; }
 

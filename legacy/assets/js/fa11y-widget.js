@@ -1055,8 +1055,15 @@
 	// CSS property -> short name used for the --fa11y-dm-* variable and the data-fa11y-dm token.
 	var DM_PROPS = {
 		'background-color': 'bg', 'color': 'color', 'fill': 'fill', 'stroke': 'stroke', 'box-shadow': 'shadow',
-		'border-top-color': 'bt', 'border-right-color': 'br', 'border-bottom-color': 'bb', 'border-left-color': 'bl'
+		'border-top-color': 'bt', 'border-right-color': 'br', 'border-bottom-color': 'bb', 'border-left-color': 'bl',
+		'filter': 'invert'
 	};
+	// Form fields whose colours dark mode swaps (buttons and tick boxes are left to the site's styling).
+	var DM_FIELD_SKIP = { checkbox: 1, radio: 1, range: 1, color: 1, image: 1, hidden: 1, submit: 1, button: 1, reset: 1 };
+	function isField(n) {
+		return n.tagName === 'SELECT' || n.tagName === 'TEXTAREA' ||
+			(n.tagName === 'INPUT' && !DM_FIELD_SKIP[(n.getAttribute('type') || 'text').toLowerCase()]);
+	}
 
 	var colourCache = {};
 	var colourCtx = null;
@@ -1200,6 +1207,7 @@
 					bg: cs.backgroundColor,
 					bgImage: cs.backgroundImage !== 'none' || hasMediaBackground(n),
 					overlay: (cs.position === 'absolute' || cs.position === 'fixed') && parseFloat(cs.opacity) < 1,
+					field: isField(n),
 					color: cs.color,
 					svg: n.namespaceURI === 'http://www.w3.org/2000/svg',
 					fill: cs.fill,
@@ -1222,6 +1230,16 @@
 				var up = node === html ? { bg: CANVAS_WHITE, orig: CANVAS_WHITE } : parentInfo(node);
 				var eff = up.bg, orig = up.orig;
 				var bg = parseRGB(j.bg);
+
+				// A light/grey form field with its arrow or icon drawn as a background image
+				// (common for dropdowns and search boxes): CSS can't recolour that image, so
+				// invert the whole field instead. Background, border, text and arrow flip
+				// together and hues are kept. Its options/contents are left alone.
+				if (j.field && j.bgImage && bg && bg.a >= 0.5 && swappable(bg) && !j.overlay) {
+					write(node, 'filter', 'invert(1) hue-rotate(180deg)');
+					info.set(node, { bg: null, orig: null });
+					return;
+				}
 
 				if (bg && bg.a > 0) {
 					var origBg = bg;
